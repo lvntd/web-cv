@@ -25,6 +25,36 @@ function SectionHeading({ children, ruled = true }: { children: ReactNode; ruled
   return <h2 className={ruled ? 'sectionHeading ruled' : 'sectionHeading'}>{children}</h2>
 }
 
+/** The company name, linked when a URL is known. */
+function CompanyName({ entry }: { entry: EntryData }) {
+  if (entry.companyParts) {
+    return (
+      <>
+        {entry.companyParts.map((part, i) => (
+          <span key={part.name}>
+            {i > 0 && ' · '}
+            {part.url ? (
+              <a className="companyLink" href={part.url} target="_blank" rel="noreferrer noopener">
+                {part.name}
+              </a>
+            ) : (
+              part.name
+            )}
+          </span>
+        ))}
+      </>
+    )
+  }
+  if (entry.companyUrl) {
+    return (
+      <a className="companyLink" href={entry.companyUrl} target="_blank" rel="noreferrer noopener">
+        {entry.company}
+      </a>
+    )
+  }
+  return <>{entry.company}</>
+}
+
 function Entry({ entry }: { entry: EntryData }) {
   // Dates sit next to the role when there is one; otherwise on the first row.
   const firstRowMeta = entry.location ?? (entry.role ? null : entry.dates)
@@ -32,7 +62,7 @@ function Entry({ entry }: { entry: EntryData }) {
     <article className="entry">
       <div className="entryTop">
         <span className="company">
-          {entry.company}
+          <CompanyName entry={entry} />
           {entry.companySuffix && <span className="companySuffix">{entry.companySuffix}</span>}
         </span>
         {firstRowMeta && <span className="meta">{firstRowMeta}</span>}

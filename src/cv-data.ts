@@ -27,6 +27,7 @@ export const cv: Cv = {
   experience: [
     {
       company: 'SAVOIRR',
+      companyUrl: 'https://savoirr.com',
       location: 'Zurich, Switzerland',
       role: 'Frontend Engineer · Full-time, remote',
       dates: 'Mar 2026 – Present',
@@ -39,6 +40,7 @@ export const cv: Cv = {
     },
     {
       company: 'TNET',
+      companyUrl: 'https://tnet.ge/en',
       location: 'Tbilisi, Georgia',
       role: 'Frontend Engineer · Full-time, hybrid',
       dates: 'Oct 2023 – Mar 2026',
@@ -63,6 +65,7 @@ export const cv: Cv = {
     },
     {
       company: 'Axon Development Group',
+      companyUrl: 'https://axon.dev',
       location: 'Kraków, Poland',
       role: 'Frontend Developer · B2B, full-time, remote',
       dates: 'Jul 2022 – Oct 2023',
@@ -75,6 +78,7 @@ export const cv: Cv = {
     },
     {
       company: 'EPAM Systems',
+      companyUrl: 'https://epam.com',
       location: 'Tbilisi, Georgia',
       role: 'Junior Software Engineer · Full-time, hybrid',
       dates: 'Dec 2021 – Jul 2022',
@@ -88,6 +92,7 @@ export const cv: Cv = {
     },
     {
       company: 'Caucasus University',
+      companyUrl: 'https://cu.edu.ge/en',
       location: 'Tbilisi, Georgia',
       role: 'Guest Lecturer · Part-time',
       dates: 'Mar 2018 – Jun 2022',
@@ -95,6 +100,10 @@ export const cv: Cv = {
     },
     {
       company: 'RSM Georgia · Nexia Georgia',
+      companyParts: [
+        { name: 'RSM Georgia', url: 'https://www.rsm.global/georgia/en' },
+        { name: 'Nexia Georgia', url: 'https://www.nexia.ge/en/' },
+      ],
       location: 'Tbilisi, Georgia',
       role: 'Tax Intern → Tax Manager · Full-time, on-site',
       dates: 'Mar 2013 – Dec 2021',
@@ -105,6 +114,7 @@ export const cv: Cv = {
   projects: [
     {
       company: 'Prive AI',
+      companyUrl: 'https://priveai.ge/en',
       companySuffix: ' · solo project',
       dates: 'Mar 2025 – Present',
       paragraphs: [
@@ -114,7 +124,6 @@ export const cv: Cv = {
           ' More than an LLM wrapper: a RAG pipeline over tax sources plus a set of calculation tools for precise, verifiable figures. Designed, built, and deployed end-to-end, solo — frontend, API, data layer, and infrastructure.',
         ],
       ],
-      link: 'priveai.ge/en',
       tech: [
         'TypeScript', 'Next.js', 'shadcn', 'Tailwind', 'React Query', 'Express', 'MongoDB',
         'LangChain', 'Docker', 'AWS',

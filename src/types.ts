@@ -17,6 +17,17 @@ export type RichText = string | (string | RichSegment)[]
 /** One entry under Experience or Projects. */
 export interface Entry {
   company: string
+  /**
+   * Employer website — makes the company name clickable in both views.
+   * For a name covering two organizations, use `companyParts` instead.
+   */
+  companyUrl?: string
+  /**
+   * Splits the company name into separately-linked pieces, joined with " · ".
+   * Use when one entry covers two organizations with different sites.
+   * Takes precedence over `company`/`companyUrl` when present.
+   */
+  companyParts?: { name: string; url?: string }[]
   /** Rendered after the company name in regular gray, e.g. " · solo project". */
   companySuffix?: string
   /** Omit for projects; when absent the dates move up to the company row. */

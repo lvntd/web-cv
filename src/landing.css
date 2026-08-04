@@ -196,6 +196,20 @@
   font-weight: 400;
   color: var(--faint);
 }
+
+/* Linked company names look identical to unlinked ones; the underline only
+   appears on hover/focus so the heading styling is unchanged at rest. */
+.companyLink {
+  color: inherit;
+  font: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s ease;
+}
+.companyLink:hover,
+.companyLink:focus-visible {
+  border-bottom-color: var(--accent);
+}
 .meta {
   font-family: var(--mono);
   font-size: 0.75rem;

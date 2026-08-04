@@ -97,6 +97,9 @@ const styles = StyleSheet.create({
   },
   company: { fontFamily: sans, fontWeight: 600, fontSize: px(15.5), color: colors.ink },
   companySuffix: { fontWeight: 400, color: colors.faint },
+  // Link defaults to blue + underlined; restate only those two so the linked
+  // company name looks identical to an unlinked one.
+  companyLink: { color: colors.ink, textDecoration: 'none' },
   monoMeta: { fontFamily: mono, fontSize: px(11.5), color: colors.faint },
   role: { fontSize: px(13.5), color: colors.sub, marginTop: px(2) },
   paragraph: { marginTop: px(8), fontSize: px(13.5), lineHeight: 1.5, color: colors.body },
@@ -178,6 +181,39 @@ function SectionHeading({ children, rule = true }: { children: ReactNode; rule?:
   )
 }
 
+/**
+ * The company name, linked when a URL is known. Links are nested inline so
+ * they inherit styles.company and the row layout is unchanged.
+ */
+function CompanyName({ entry }: { entry: EntryData }) {
+  if (entry.companyParts) {
+    return (
+      <>
+        {entry.companyParts.map((part, i) => (
+          <Text key={part.name}>
+            {i > 0 && ' · '}
+            {part.url ? (
+              <Link src={part.url} style={styles.companyLink}>
+                {part.name}
+              </Link>
+            ) : (
+              part.name
+            )}
+          </Text>
+        ))}
+      </>
+    )
+  }
+  if (entry.companyUrl) {
+    return (
+      <Link src={entry.companyUrl} style={styles.companyLink}>
+        {entry.company}
+      </Link>
+    )
+  }
+  return <>{entry.company}</>
+}
+
 function Entry({ entry, last }: { entry: EntryData; last: boolean }) {
   // Dates sit next to the role when there is one; otherwise on the first row.
   const firstRowMeta = entry.location ?? (entry.role ? null : entry.dates)
@@ -185,7 +221,7 @@ function Entry({ entry, last }: { entry: EntryData; last: boolean }) {
     <View style={last ? undefined : styles.entry} wrap={false}>
       <View style={styles.entryRow}>
         <Text style={styles.company}>
-          {entry.company}
+          <CompanyName entry={entry} />
           {entry.companySuffix && <Text style={styles.companySuffix}>{entry.companySuffix}</Text>}
         </Text>
         {firstRowMeta && <Text style={styles.monoMeta}>{firstRowMeta}</Text>}
