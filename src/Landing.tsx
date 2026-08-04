@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { cv } from './cv-data.ts'
+import { contactHref } from './contact.ts'
 import type { Entry as EntryData, RichText } from './types.ts'
 import './landing.css'
 
@@ -74,9 +75,8 @@ function Entry({ entry }: { entry: EntryData }) {
 
 /** Turns a bare contact line into the right kind of link. */
 function ContactLink({ value }: { value: string }) {
-  const href = value.includes('@') ? `mailto:${value}` : `https://${value}`
   return (
-    <a href={href} target={value.includes('@') ? undefined : '_blank'} rel="noreferrer noopener">
+    <a href={contactHref(value)} target="_blank" rel="noreferrer noopener">
       {value}
     </a>
   )

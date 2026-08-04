@@ -1,8 +1,9 @@
 import type { ReactNode } from 'react'
-import { Document, Page, View, Text, StyleSheet } from '@react-pdf/renderer'
+import { Document, Page, View, Text, Link, StyleSheet } from '@react-pdf/renderer'
 import './fonts.ts'
 import { colors, px, sans, mono } from './theme.ts'
 import { cv } from './cv-data.ts'
+import { contactHref } from './contact.ts'
 import type { Entry as EntryData, RichText } from './types.ts'
 
 const styles = StyleSheet.create({
@@ -49,6 +50,16 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
   contactLocation: { color: colors.contact },
+  // Link renders blue and underlined by default; restate the contact look so
+  // the clickable lines are visually identical to the plain ones.
+  contactLink: {
+    fontFamily: mono,
+    fontSize: px(11.5),
+    lineHeight: 1.5,
+    color: colors.contact,
+    textAlign: 'right',
+    textDecoration: 'none',
+  },
 
   // ── Summary ───────────────────────────────────────────────
   summary: {
@@ -103,7 +114,15 @@ const styles = StyleSheet.create({
   bold: { fontWeight: 600, color: colors.ink },
   medium: { fontWeight: 500, color: colors.ink },
   tech: { marginTop: px(8), fontFamily: mono, fontSize: px(11), color: colors.tech },
-  link: { marginTop: px(7), fontFamily: mono, fontSize: px(11.5), color: colors.accent },
+  // Row keeps the link's clickable box hugging the text instead of spanning
+  // the full column width (Link is block-level by default).
+  linkRow: { flexDirection: 'row', marginTop: px(7) },
+  link: {
+    fontFamily: mono,
+    fontSize: px(11.5),
+    color: colors.accent,
+    textDecoration: 'none',
+  },
 
   // ── Bottom grid: education / languages / other ────────────
   grid: { flexDirection: 'row', gap: px(40), marginTop: px(24) },
@@ -194,7 +213,13 @@ function Entry({ entry, last }: { entry: EntryData; last: boolean }) {
           ))}
         </View>
       )}
-      {entry.link && <Text style={styles.link}>{entry.link}</Text>}
+      {entry.link && (
+        <View style={styles.linkRow}>
+          <Link src={`https://${entry.link}`} style={styles.link}>
+            {entry.link}
+          </Link>
+        </View>
+      )}
       {entry.tech && <Text style={styles.tech}>{entry.tech.join(' · ')}</Text>}
     </View>
   )
@@ -216,7 +241,9 @@ export default function CvDocument() {
           </View>
           <View style={styles.contactBlock}>
             {cv.contact.lines.map((line) => (
-              <Text key={line} style={styles.contactLine}>{line}</Text>
+              <Link key={line} src={contactHref(line)} style={styles.contactLink}>
+                {line}
+              </Link>
             ))}
             <Text style={[styles.contactLine, styles.contactLocation]}>{cv.contact.location}</Text>
           </View>
