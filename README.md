@@ -1,7 +1,10 @@
 # web-cv
 
-Levan Tediashvili's CV as a React + TypeScript project, with two views driven by
-one source of truth ([src/cv-data.ts](src/cv-data.ts)):
+After a few failed attempts at making a decent-looking CV in MS Word, I gave up — it's basically impossible. So I built it in React instead and generate a PDF from that.
+
+And here it is.
+
+If you're also fighting with Word and don't feel like paying $20 to some random CV builder, just clone the repo and drop your info into `src/cv-data.ts`.
 
 | Route | What it is |
 | --- | --- |
