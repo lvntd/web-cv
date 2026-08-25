@@ -27,24 +27,7 @@ function SectionHeading({ children, ruled = true }: { children: ReactNode; ruled
 
 /** The company name, linked when a URL is known. */
 function CompanyName({ entry }: { entry: EntryData }) {
-  if (entry.companyParts) {
-    return (
-      <>
-        {entry.companyParts.map((part, i) => (
-          <span key={part.name}>
-            {i > 0 && ' · '}
-            {part.url ? (
-              <a className="companyLink" href={part.url} target="_blank" rel="noreferrer noopener">
-                {part.name}
-              </a>
-            ) : (
-              part.name
-            )}
-          </span>
-        ))}
-      </>
-    )
-  }
+
   if (entry.companyUrl) {
     return (
       <a className="companyLink" href={entry.companyUrl} target="_blank" rel="noreferrer noopener">
@@ -87,11 +70,11 @@ function Entry({ entry }: { entry: EntryData }) {
           ))}
         </ul>
       )}
-      {entry.link && (
-        <a className="link" href={`https://${entry.link}`} target="_blank" rel="noreferrer noopener">
-          {entry.link}
+      {entry.links && entry.links.map(link=><>
+        <a className="link" href={`https://${link}`} target="_blank" rel="noreferrer noopener">
+          {link}
         </a>
-      )}
+        </>)}
       {entry.tech && (
         <ul className="tech">
           {entry.tech.map((t) => (

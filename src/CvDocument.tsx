@@ -8,8 +8,8 @@ import type { Entry as EntryData, RichText } from './types.ts'
 
 const styles = StyleSheet.create({
   page: {
-    paddingVertical: '0.6in',
-    paddingHorizontal: '0.75in',
+    paddingVertical: '0.4in',
+    paddingHorizontal: '0.40in',
     fontFamily: sans,
     fontSize: px(13.5),
     color: colors.body,
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   tech: { marginTop: px(8), fontFamily: mono, fontSize: px(11), color: colors.tech },
   // Row keeps the link's clickable box hugging the text instead of spanning
   // the full column width (Link is block-level by default).
-  linkRow: { flexDirection: 'row', marginTop: px(7) },
+  linkRow: { flexDirection: 'row', marginTop: px(7), gap: px(6) },
   link: {
     fontFamily: mono,
     fontSize: px(11.5),
@@ -186,24 +186,6 @@ function SectionHeading({ children, rule = true }: { children: ReactNode; rule?:
  * they inherit styles.company and the row layout is unchanged.
  */
 function CompanyName({ entry }: { entry: EntryData }) {
-  if (entry.companyParts) {
-    return (
-      <>
-        {entry.companyParts.map((part, i) => (
-          <Text key={part.name}>
-            {i > 0 && ' · '}
-            {part.url ? (
-              <Link src={part.url} style={styles.companyLink}>
-                {part.name}
-              </Link>
-            ) : (
-              part.name
-            )}
-          </Text>
-        ))}
-      </>
-    )
-  }
   if (entry.companyUrl) {
     return (
       <Link src={entry.companyUrl} style={styles.companyLink}>
@@ -249,11 +231,11 @@ function Entry({ entry, last }: { entry: EntryData; last: boolean }) {
           ))}
         </View>
       )}
-      {entry.link && (
+      {entry.links && (
         <View style={styles.linkRow}>
-          <Link src={`https://${entry.link}`} style={styles.link}>
-            {entry.link}
-          </Link>
+          {entry.links.map(link=> <Link key={link} src={`https://${link}`} style={styles.link}>
+            {link}
+          </Link>)}
         </View>
       )}
       {entry.tech && <Text style={styles.tech}>{entry.tech.join(' · ')}</Text>}
